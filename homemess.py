@@ -124,13 +124,22 @@ class Player(object):
     def draw(self):
         if self.hiden:
             return
+        if self.player_inside:
+            if self.player_sprite_walk.state == arcade.sprite.FACE_LEFT:
+                t = self.player_inside.player_sprite_stand_right
+            else:
+                t = self.player_inside.player_sprite_stand_left
+            c = self.player_sprite_stand_right
+            arcade.draw_texture_rectangle(c.center_x, c.center_y + 80, t.width, t.height, t._texture)
         if self.player_sprite_walk.change_x:
             self.player_sprite_walk.draw()
+
         else:
             if self.player_sprite_walk.state == arcade.sprite.FACE_LEFT:
                 self.player_sprite_stand_right.draw()
             else:
                 self.player_sprite_stand_left.draw()
+
 
 
     def update(self, delta_time):
@@ -292,10 +301,10 @@ class MyGame(arcade.Window):
 
 
 
-        for i, hole in enumerate(self.holes):
-            hole_a, hole_b = hole
-            arcade.draw_commands.draw_xywh_rectangle_filled(*hole_a[:2], 10, 10, self.hc[i])
-            arcade.draw_commands.draw_xywh_rectangle_filled(*hole_b[:2], 10, 10, self.hc[i])
+        # for i, hole in enumerate(self.holes):
+        #     hole_a, hole_b = hole
+        #     arcade.draw_commands.draw_xywh_rectangle_filled(*hole_a[:2], 10, 10, self.hc[i])
+        #     arcade.draw_commands.draw_xywh_rectangle_filled(*hole_b[:2], 10, 10, self.hc[i])
 
         ms = max([p.score for p in self.players])
 
